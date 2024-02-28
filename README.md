@@ -1,2 +1,2 @@
 
-# GitHub User Findner
+# GitHub User Finder

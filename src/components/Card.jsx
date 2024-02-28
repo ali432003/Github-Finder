@@ -75,9 +75,9 @@ const Card = (props) => {
         </div>
         <div className="flex gap-x-2 lg:w-auto md:w-auto text-balance">
           <BiWorld color="#2563eb" size={21} />
-          <Link to={props.blog.startsWith("http") ? props.blog : "https://" + props.blog} target="_blank"><h1  className={`${
+          <Link to={props.blog.startsWith("https") ? props.blog : "https://" + props.blog} target="_blank"><h1  className={`${
           props.darkMode ? "text-slate-950" : "text-white"
-        } cursor-pointer `}>{props.blog ? props.blog : "null"}</h1></Link>
+        } cursor-pointer text-balance`}>{props.blog ? props.blog : "null"}</h1></Link>
         </div>
         <div className="flex gap-x-2 text-balance">
           <BsBuildings color="#2563eb" size={21} />

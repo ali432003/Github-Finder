@@ -15,7 +15,7 @@ const SearchBox = (props) => {
 
  
 
-  const fetchApi = async (searchValue = "ali432003") => {
+  const fetchApi = async (searchValue) => {
     try {
       const response = await axios.get(
         `https://api.github.com/users/${searchValue}`

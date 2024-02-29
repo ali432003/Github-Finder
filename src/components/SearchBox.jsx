@@ -4,12 +4,11 @@ import { TextField } from "@mui/material";
 import Nothing from "/img/nothing to show.png";
 import Card from "./Card";
 import axios from "axios";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 import Skeleton from "./Skeleton";
 
 const SearchBox = (props) => {
   const [loader,setLoader] = useState(false)
+  const [error,seterror] = useState(false)
   const [showNothing, setshowNothing] = useState(false);
   const [user, setUser] = useState("");
   const [apiData, setApiData] = useState([]);
@@ -22,9 +21,13 @@ const SearchBox = (props) => {
         `https://api.github.com/users/${searchValue}`
       );
       setApiData(response.data);
+      seterror(false);
       console.log("Api Se data agiyaa : " ,response.data)
     } catch (error) {
-      console.log("something went wrong: ", error);
+      console.log("something went wrong: ", error.message);
+      seterror(true)
+      setLoader(false)
+      setshowNothing(false)
     }
   };
   
@@ -87,32 +90,35 @@ const SearchBox = (props) => {
       </div>
 
       {showNothing ? (
-        <Card
-          name={apiData.name}
-          userName={apiData.login}
-          id={apiData.id}
-          repos={apiData.public_repos}
-          followers={apiData.followers}
-          following={apiData.following}
-          blog={apiData.blog}
-          location={apiData?.location}
-          bio={apiData.bio}
-          idUrl={apiData.html_url}
-          avatar={apiData.avatar_url}
-          twitter={apiData?.twitter_username}
-          company={apiData?.company}
-          createdate={apiData.created_at}
-          darkMode = {props.darkMode}
-        />
-      ) : (
-        loader ? (<Skeleton/>)
-        :   (<img
-          src={Nothing}
-          className="lg:w-[30rem] w-[21rem] lg:mx-auto mx-[1rem] md:mx-auto lg:h-[30rem] mt-[1rem]"
-        />)
-      )}
+          <Card
+            name={apiData.name}
+            userName={apiData.login}
+            id={apiData.id}
+            repos={apiData.public_repos}
+            followers={apiData.followers}
+            following={apiData.following}
+            blog={apiData.blog}
+            location={apiData?.location}
+            bio={apiData.bio}
+            idUrl={apiData.html_url}
+            avatar={apiData.avatar_url}
+            twitter={apiData?.twitter_username}
+            company={apiData?.company}
+            createdate={apiData.created_at}
+            darkMode={props.darkMode}
+            error = {error}
+            user={user}
+          />
+        ) : (
+          loader ? (<Skeleton/>) 
+           : (<img
+              src={Nothing}
+              className="lg:w-[30rem] w-[21rem] lg:mx-auto mx-[1rem] md:mx-auto lg:h-[30rem] mt-[1rem]"
+            />)
+        )}
+
     </>
   );
 };
 
-export default SearchBox;
+export default SearchBox
